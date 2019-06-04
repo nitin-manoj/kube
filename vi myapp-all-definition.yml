@@ -1,0 +1,54 @@
+
+apiVersion: apps/v1
+kind:  Deployment
+metadata:
+    name: myapp
+    labels:
+        app: myapp-test
+        type: back-end
+spec:
+  selector:
+    matchlabels:
+      app: myapp-test
+      tier: myapp
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: myapp-test
+        tier: myapp
+    spec:
+      containers:
+          - name: myapp
+            image: nitinmanoj/myapp
+
+---
+apiVersion: apps/v1
+kind:  Deployment
+metadata:
+    name: mydb
+    labels:
+        app: mydb-test
+        type: db
+spec:
+    containers:
+        - name: mydb
+          image: nitinmanoj/mydb:latest
+          env:
+            - name: MYSQL_DATABASE
+              value: "SampleDB"
+            - name: MYSQL_ALLOW_EMPTY_PASSWORD
+              value: "yes"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: myapp-test
+  ports:
+  - protocol: TCP
+    port: 5005
+    targetPort: 5005
+  type: ClusterIp
