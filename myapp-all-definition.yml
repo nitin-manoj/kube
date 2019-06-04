@@ -22,23 +22,6 @@ spec:
           - name: myapp
             image: nitinmanoj/myapp
 
-# ---
-# apiVersion: apps/v1
-# kind:  Deployment
-# metadata:
-#     name: mydb
-#     labels:
-#         app: mydb-test
-#         type: db
-# spec:
-#     containers:
-#         - name: mydb
-#           image: nitinmanoj/mydb:latest
-#           env:
-#             - name: MYSQL_DATABASE
-#               value: "SampleDB"
-#             - name: MYSQL_ALLOW_EMPTY_PASSWORD
-#               value: "yes"
 ---
 apiVersion: v1
 kind: Service
@@ -51,4 +34,4 @@ spec:
   - protocol: TCP
     port: 5005
     targetPort: 5005
-  type: ClusterIp
+  type: NodePort
