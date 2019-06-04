@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind:  Deployment
+metadata:
+    name: mydb
+    labels:
+        app: mydb-test
+        type: db
+spec:
+    containers:
+        - name: mydb
+          image: nitinmanoj/mydb:latest
+          env:
+            - name: MYSQL_DATABASE
+              value: "SampleDB"
+            - name: MYSQL_ALLOW_EMPTY_PASSWORD
+              value: "yes"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-dbservice
+spec:
+  selector:
+    app: mydb-test
+  ports:
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306
+  type: NodeIP
