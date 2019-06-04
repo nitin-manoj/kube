@@ -22,7 +22,7 @@ spec:
   template:
     metadata:
       labels:
-        app: mysql
+        app: mydb
     spec:
       containers:
       - image: nitinmanoj/mydb:latest
